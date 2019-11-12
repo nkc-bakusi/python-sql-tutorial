@@ -1,19 +1,13 @@
 from bottle import route, run, template, redirect, request
-import sqlite3
+import MySQLdb
 
-dbname = "test.db"
-conn = sqlite3.connect(dbname)
-c = conn.cursor()
-
-# try:
-#     c.execute("DROP TABLE IF EXISTS test")
-#     c.execute("CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY, text TEXT)")
-#     c.execute("INSERT INTO test VALUES (1, 'test')")
-# except sqlite3.Error as e:
-#     print('sqlite3.Error occurred:', e.args[0])
-
-# conn.commit()
-# conn.close()
+connection = MySQLdb.connect(
+    host='localhost',
+    user='root',
+    db='python',
+    # passeord='',
+    charset='utf8'
+)
 
 @route("/")
 def index():
@@ -32,33 +26,24 @@ def add():
     return redirect("/")
 
 def get_test_list():
-    conn = sqlite3.connect(dbname)
-    c = conn.cursor()
-    select = "select * from test"
-    c.execute(select)
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM name_age_list")
     itme_list = []
-    for row in c.fetchall():
+    for row in cursor:
         itme_list.append({
             "id": row[0],
-            "test": row[1]
+            "name": row[1]
         })
-    conn.close()
     return itme_list
 
 def save_test_item(item):
-    conn = sqlite3.connect(dbname)
-    c = conn.cursor()
-    insert = "insert into test(text) values(?)"
-    c.execute(insert, (item,))
-    conn.commit()
-    conn.close()
+    cursor = connection.cursor()
+    cursor.execute("insert into name_age_list(name) values(%s)", [item])
+    connection.commit()
 
 def delete_test_item(item_id):
-    conn = sqlite3.connect(dbname)
-    c = conn.cursor()
-    delete = "delete from test where id=?"
-    c.execute(delete, (item_id,))
-    conn.commit()
-    conn.close()
+    cursor = connection.cursor()
+    cursor.execute("delete from name_age_list where id=%s", [item_id])
+    connection.commit()
 
 run(host='localhost', port=8080, debug=True, reloader=True)
