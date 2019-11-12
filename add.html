@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+    <title>Hello</title>
+</head>
+<body>
+    % import datetime
+
+    <p>{{ title }}</p>
+
+    % title = 'test code'
+
+    <p>{{ title }}</p>
+
+    % if flag != True:
+    <p>flag = True</p>
+    % else:
+    <p>flag = False</p>
+
+    <%
+    # インデントは無視されるらしいのでifやforなどのインデントを使う処理は記述できない
+    # ifを書くなら↑のコード
+
+    dt_now = datetime.datetime.now()
+    ut_string = dt_now.strftime('%Y年%m月%d日 %H:%M:%S')
+    %>
+    {{ ut_string }}
+</body>
