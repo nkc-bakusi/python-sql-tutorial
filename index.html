@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+  <meta charset="UTF-8">
+  <title>test</title>
+</head>
+<body>
+  <h1>test</h1>
+
+  <h2>test 新規登録</h2>
+  <form method="POST" action="/add">
+      <input type="text" name="save_itme" placeholder="testを入力" required /><br/>
+      <input type="submit" value="追加" />
+  </form>
+
+  <h2>test 一覧</h2>
+  <table border="1">
+  %for item in itme_list:
+    <tr>
+      <td>{{item["id"]}}</td>
+      <td>{{item["test"]}}</td>
+      <td><a href="/delete/{{item['id']}}">削除</a></td>
+    </tr>
+  %end
+  </table>
+
+</body>
+</html>
