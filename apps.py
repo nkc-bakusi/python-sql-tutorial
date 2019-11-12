@@ -5,15 +5,15 @@ dbname = "test.db"
 conn = sqlite3.connect(dbname)
 c = conn.cursor()
 
-try:
-    c.execute("DROP TABLE IF EXISTS test")
-    c.execute("CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY, text TEXT)")
-    c.execute("INSERT INTO test VALUES (1, 'test')")
-except sqlite3.Error as e:
-    print('sqlite3.Error occurred:', e.args[0])
+# try:
+#     c.execute("DROP TABLE IF EXISTS test")
+#     c.execute("CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY, text TEXT)")
+#     c.execute("INSERT INTO test VALUES (1, 'test')")
+# except sqlite3.Error as e:
+#     print('sqlite3.Error occurred:', e.args[0])
 
-conn.commit()
-conn.close()
+# conn.commit()
+# conn.close()
 
 @route("/")
 def index():
